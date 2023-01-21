@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+}
+
+/* html {
+  height: 100%;
+  background-color: #1a232e;
+} */
+
+@layer components {
+  .paddings {
+    @apply sm:p-16 px-6 py-12;
+  }
+  .x__paddings {
+    @apply sm:px-16 px-6;
+  }
+
+  .in__width {
+    @apply 2xl:max-w-[1280px] w-full;
+  }
+}
