@@ -7,6 +7,8 @@ const quizPlay = createSlice({
     score: parseInt(localStorage.getItem("score")) || 0,
     currentState: "NOT_STARTED",
     quiz: JSON.parse(localStorage.getItem("question")) || [],
+    answersStatus: JSON.parse(localStorage.getItem("answersStatus")) || [],
+    questionIndex: parseInt(localStorage.getItem("questionIndex")) || 0,
   },
   reducers: {
     startQuiz: (state) => {
@@ -23,10 +25,23 @@ const quizPlay = createSlice({
     endScore: (state) => {
       state.score = 0;
       state.quiz = [];
+      state.answersStatus = [];
+      state.questionIndex = 0;
     },
     changeScore: (state, action) => {
       state.score = state.score + action.payload.score;
       localStorage.setItem("score", state.score);
+    },
+    changeQuestionIndex: (state, action) => {
+      state.questionIndex = state.questionIndex + action.payload.questionIndex;
+      localStorage.setItem("questionIndex", state.questionIndex);
+    },
+    changeAnswersStatus: (state, action) => {
+      state.answersStatus = action.payload.answersStatus;
+      localStorage.setItem(
+        "answersStatus",
+        JSON.stringify(state.answersStatus)
+      );
     },
     // decreaseScore: (state, action) => {
     //   if (state.score - action.payload.score >= 0) {
@@ -36,6 +51,13 @@ const quizPlay = createSlice({
   },
 });
 
-export const { changeScore, startQuiz, endQuiz, setQuiz, endScore } =
-  quizPlay.actions;
+export const {
+  changeScore,
+  startQuiz,
+  endQuiz,
+  setQuiz,
+  endScore,
+  changeAnswersStatus,
+  changeQuestionIndex,
+} = quizPlay.actions;
 export default quizPlay.reducer;

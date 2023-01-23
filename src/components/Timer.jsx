@@ -7,7 +7,9 @@ const Completionist = () => (
 );
 
 const Timer = (props) => {
-  const { currentState, score, quiz } = useSelector((state) => state.quizPlay);
+  const { currentState, score, quiz, answersStatus } = useSelector(
+    (state) => state.quizPlay
+  );
 
   const countDown = ({ hours, minutes, seconds, completed }) => {
     if (completed) {
@@ -47,7 +49,9 @@ const Timer = (props) => {
           <p className="text-2xl font-semibold text-white">
             Salah: {quiz.results.length - score / 10}
           </p>
-          <p className="text-2xl font-semibold text-white">Jumlah Jawab: 10</p>
+          <p className="text-2xl font-semibold text-white">
+            Jumlah Jawab: {answersStatus.length}
+          </p>
         </>
       )}
     </div>

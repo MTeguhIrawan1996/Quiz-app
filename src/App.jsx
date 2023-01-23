@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { Home, Quiz, QuizPlay } from "./pages";
+import { Home, Login, Quiz, QuizPlay } from "./pages";
 import Footer from "./components/Footer";
 
 function App() {
@@ -8,6 +8,7 @@ function App() {
       <Routes>
         <Route path="*" element={<Home />} />
         <Route path="/" element={<Home />} />
+        <Route path="/Login" element={<Login />} />
         <Route path="/Quiz" element={<Quiz />} />
         <Route path="/Quiz-play" element={<QuizPlay />} />
       </Routes>
