@@ -23,9 +23,7 @@ const CountDownRenderer = (props) => {
       {props.minutes > 0 && (
         <CountDownItem label="Menit" value={props.minutes} />
       )}
-      {props.seconds > 0 && (
-        <CountDownItem label="Detik" value={props.seconds} />
-      )}
+      <CountDownItem label="Detik" value={props.seconds} />
     </div>
   );
 };

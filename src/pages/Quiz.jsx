@@ -1,10 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { QuizImg } from "../assets";
-import { Button, Navbar } from "../components";
+import { Button, Navbar, Spinner } from "../components";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setQuiz, startQuiz } from "../features/quizPlaySlice";
+import useFetch from "../hooks/useFetch";
 
 const Quiz = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { data, loading, error } = useFetch(
+    "api.php?amount=10&category=21&difficulty=easy&type=multiple"
+  );
+
+  useEffect(() => {
+    if (data) {
+      localStorage.setItem("question", JSON.stringify(data));
+    }
+  }, [data]);
+
+  const handleClick = () => {
+    if (data) {
+      localStorage.setItem("dateStart", Date.now() + 60 * 60 * 500);
+      dispatch(startQuiz());
+      dispatch(setQuiz());
+      navigate("/quiz-play");
+    }
+  };
   return (
     <>
       <Navbar />
@@ -17,17 +39,25 @@ const Quiz = () => {
           />
           <h1 className="text-3xl font-bold text-white">Kuy Mulai Quiz</h1>
           <div className="flex flex-col justify-center items-center mt-6">
-            <Button
-              text="🥇 Mulai Yaa"
-              className="font-semibold text-base w-[371px]"
-              onClick={() => navigate("/quiz-play")}
-            />
-            <NavLink
-              to="/"
-              className="flex flex-row justify-start items-center my-8 text-sm font-medium text-gray-400 hover:text-secondary-color"
-            >
-              Kembali
-            </NavLink>
+            {loading ? (
+              <Spinner />
+            ) : (
+              <>
+                <Button
+                  text="🥇 Mulai Yaa"
+                  className="font-semibold text-base w-[371px]"
+                  onClick={() => {
+                    handleClick();
+                  }}
+                />
+                <NavLink
+                  to="/"
+                  className="flex flex-row justify-start items-center my-8 text-sm font-medium text-gray-400 hover:text-secondary-color"
+                >
+                  Kembali
+                </NavLink>
+              </>
+            )}
           </div>
         </div>
       </div>
