@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { QuizImg } from "../assets";
 import { Button, Navbar, Spinner } from "../components";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setQuiz, startQuiz } from "../features/quizPlaySlice";
 import useFetch from "../hooks/useFetch";
@@ -10,14 +10,21 @@ const Quiz = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.login);
+  const { dateStart, quiz, currentState } = useSelector(
+    (state) => state.quizPlay
+  );
 
   const { data, loading, error } = useFetch(
     "api.php?amount=10&category=21&difficulty=easy&type=multiple"
   );
 
   useEffect(() => {
-    if (data) {
+    if (dateStart) {
+      navigate("/quiz-play");
+    }
+    if (data?.results?.length) {
       localStorage.setItem("question", JSON.stringify(data));
+      dispatch(setQuiz());
     }
   }, [data]);
 
@@ -25,10 +32,10 @@ const Quiz = () => {
     if (data) {
       localStorage.setItem("dateStart", Date.now() + 60 * 60 * 500);
       dispatch(startQuiz());
-      dispatch(setQuiz());
       navigate("/quiz-play");
     }
   };
+
   return (
     <>
       <Navbar />

@@ -13,6 +13,7 @@ const quizPlay = createSlice({
   reducers: {
     startQuiz: (state) => {
       state.currentState = "STARTED_QUIZ";
+      state.dateStart = localStorage.getItem("dateStart");
     },
     endQuiz: (state) => {
       state.currentState = "END_QUIZ";
@@ -20,7 +21,6 @@ const quizPlay = createSlice({
     },
     setQuiz: (state) => {
       state.quiz = JSON.parse(localStorage.getItem("question"));
-      state.dateStart = localStorage.getItem("dateStart");
     },
     endScore: (state) => {
       state.score = 0;
