@@ -24,8 +24,6 @@ const QuizPlay = () => {
   const { dateStart, currentState, quiz, answersStatus, questionIndex } =
     useSelector((state) => state.quizPlay);
   const { user } = useSelector((state) => state.login);
-
-  const [end, setEnd] = useState(Date.now() + 60 * 60 * 500);
   const [options, setOptions] = useState([]);
   const [selected, setSelected] = useState(null);
 
@@ -62,7 +60,6 @@ const QuizPlay = () => {
       if (currentState === "END_QUIZ") {
         return;
       }
-      setEnd(parseInt(dateStart));
       const endDate = moment(new Date(parseInt(dateStart)));
       const interval = setInterval(async () => {
         const now = moment();
@@ -115,7 +112,7 @@ const QuizPlay = () => {
   return (
     <div className="paddings pt-16 min-h-screen">
       <div className="in__width mx-auto flex flex-col justify-center items-center gap-3">
-        <Timer end={end} />
+        <Timer end={parseInt(dateStart)} />
         {currentState === "STARTED_QUIZ" && (
           <>
             <h1 className="text-3xl font-semibold max-[450px]:text-2xl text-white text-center mt-6">
